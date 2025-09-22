@@ -8,6 +8,8 @@ import torch.nn.functional as F
 from torch.utils.tenserboard import SummaryWriter
 from datetime import datetime
 
+from copy import deepcopy
+
 
 transform = transforms.Compose([
     transforms.ToTensor(),
@@ -114,3 +116,10 @@ for epoch in range(EPOCHS):
 def show_param_dtype(model):
     for param in model.parameters():
         print("Type:", param.dtype, "Shape:", param.shape)
+
+print("Model's state_dict in float 32:")
+show_param_dtype(model)
+
+model_fp16 = deepcopy(model)
+
+model_fp16 = model_fp16.to(torch.float16)
