@@ -123,3 +123,21 @@ show_param_dtype(model)
 model_fp16 = deepcopy(model)
 
 model_fp16 = model_fp16.to(torch.float16)
+
+print("Model's state_dict in float 16:")
+show_param_dtype(model_fp16)
+
+
+def evaluate_model(model):
+    correct = 0
+    total = 0
+    model.eval()
+    with torch.no_grad():
+        for data in validation_loader:
+            images, labels = data
+            outputs = model(images)
+            _, predicted = torch.max(outputs.data, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+    accuracy = 100 * correct / total
+    return accuracy
