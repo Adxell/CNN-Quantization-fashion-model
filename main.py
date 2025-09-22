@@ -109,3 +109,8 @@ for epoch in range(EPOCHS):
         print(f'Validation loss decreased ({best_vloss:.3f} --> {avg_vloss:.3f}).  Saving model ...')
         torch.save(model.state_dict(), model_path)
     epochs_number += 1
+
+
+def show_param_dtype(model):
+    for param in model.parameters():
+        print("Type:", param.dtype, "Shape:", param.shape)
